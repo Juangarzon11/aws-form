@@ -1,18 +1,14 @@
 const express = require('express')
-const http = require('http')
 const path = require('path')
 const initDB = require('../config/db')
 const config = require('../config/config')
 const bodyParser = require("body-parser")
 const usersRouter = require('./routes/users')
 
-
 const app = express()
 
 const PORT = config.PORT
 
-const serverHttp = http.createServer(app)
-serverHttp.listen(PORT)
 
 // Hacer que node sirva los archivos de nuestro app React
 app.use(express.static(path.resolve(__dirname, '../client/build')))
@@ -33,5 +29,8 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'))
 })
 
+app.listen(PORT, () => {
+  console.log(`app Server listening on ${PORT}`)
+})
 
 initDB()
